@@ -3,14 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- tailwind css link -->
+    <!-- tailwind link -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
+    <!-- font family link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <!-- Custom Css Link -->
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Weather Forcast Application</title>
 </head>
 <body>
     <header>
-        <h1 class="text-3xl font-bold underline">Weather Forecast</h1>
+        <!-- <h1>Weather Forecast</h1> -->
+         <div class="wf-header-wrapper flex flex-col align-center">
+            <div class="wf-logo ">
+                <a href="index.html">
+                    <img src="assets/images/weather-logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="wf-menus">
+                <button id="weather" class="nav-btn active">
+                    <img src="assets/images/wf-icon1.png" alt="image">
+                    <span >Weather</span>
+                </button>
+                <button id="city" class="nav-btn">
+                    <img src="assets/images/wf-icon2.png" alt="image">
+                    <span>Cities</span>
+                </button>
+            </div>
+         </div>
     </header>
+    <main>
+        <div class="wf-curent-sec">
+            <div class="wf-search-sec">
+                <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
+                <button id="searchbtn" class="wf-btn" >Search</button>
+                <span class="error"></span>
+            </div>
+            <div class="wf-weathersec">
+                <h2>current weather</h2>
+            <div id="wf-curweather"></div>
+            </div>
+            <div class="wf-city-sec">
+                <h2>city</h2>
+            </div>
+        </div>
+    </main>
+
+    <!-- custom-js -->
+    <script src="assets/js/custom.js"></script>
 </body>
 </html>
