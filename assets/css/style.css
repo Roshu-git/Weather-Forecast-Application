@@ -102,12 +102,12 @@ table, td, th{
 
 }
 .wf-logo{
-    margin: 20px auto 40px;
+    margin: 10px auto 50px;
     text-align: center;
 }
 .wf-logo img{
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
 }
 .wf-menus img{
     width: 40px;
@@ -120,6 +120,7 @@ table, td, th{
 }
 .wf-menus button {
     margin: 0 auto 25px;
+    /* position: absolute; */
 }
 .wf-menus button span {
     font-size: 14px;
@@ -132,18 +133,19 @@ table, td, th{
 .wf-curent-sec{
     margin-left: 140px;
     position: relative;
+    top: 20px;
     height: 100%;
-    padding: 20px;
+    padding: 0 20px 0;
 }
 .wf-search-sec .search-text{
     font-size: 16px;
     font-weight: 400;
     color: var(--white-color);
-    height: 40px;
+    height: 45px;
     background-color: var(--primary-color);
     padding: 0 10px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 550px;
     width: 100%;
 }
 .wf-search-sec .search-text::placeholder{
@@ -155,7 +157,122 @@ span.error {
     font-weight: 400;
     display: block;
 }
-h2{
+.wf-search-sec {
+    max-width: 600px;
+    position: relative;
+}
+.wf-searchbtn {
+    position: absolute;
+    right: 30px;
+    top: 4px;
+    padding: 5px 15px;
+}
+/* Switch-toggle css */
+.wf-toggle-btn{
+    max-width: 100px;
+}
+.wf-switch {
+    position: relative;
+    width: 70px;
+    height: 35px;
+    display: inline-block;
+    top: 2px;
+}
+.wf-switch input{
+    opacity: 0;
+    width: 0;
+    height: 0;  
+}
+.wf-slider{
+    position: absolute;
+    inset: 0;
+    background-color: var(--secondary-color);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.wf-slider::before{
+    content: "";
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    left: 3px;
+    top: 3px;
+    background-color: var(--white-color);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+.wf-switch input:checked + .wf-slider{
+    background-color: var(--secondary-color);
+}
+.wf-switch input:checked + .wf-slider::before{
+    transform: translateX(34px);
+}
+.celsius, .fahrenheit{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.celsius{
+    left: 10px;
+} 
+.fahrenheit{
+    right: 10px;
+}
+.wf-toggle-btn button.active{
+
+}
+.wf-heading {
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 500;
+    padding: 8px 0 0;
+    text-align: left;
+}
+/* background-image css */
+.wf-bgimg {
+    min-height: 320px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    position: relative;
+    margin: 20px 0 0;
+    padding: 15px;
+}
+.wf-bgimg::after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgb(0 0 0 / 54%);
+}
+.wf-weatdata {
+    position: relative;
+    z-index: 1;
+}
+.cloudy{
+    background-image: url('../images/partly-cloudy.jpg');
+}
+.rainy{
+    background-image: url('../images/rainy.png');
+}
+.snowy{
+    background-image: url('../images/snowy.png');
+}
+.sunny{
+    background-image: url('../images/sunny.png');
+}
+.mist{
+    background-image: url('../images/mist.png');
+}
+
+h2, p{
     color: var(--white-color);
 }
 .wf-city-sec{

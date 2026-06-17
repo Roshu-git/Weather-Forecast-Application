@@ -36,14 +36,36 @@
     </header>
     <main>
         <div class="wf-curent-sec">
-            <div class="wf-search-sec">
+            <!-- <div class="wf-search-sec">
                 <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
                 <button id="searchbtn" class="wf-btn" >Search</button>
                 <span class="error"></span>
-            </div>
-            <div class="wf-weathersec">
-                <h2>current weather</h2>
-            <div id="wf-curweather"></div>
+            </div> -->
+            <div class="wf-weathersec flex w-full gap-3">
+                <div class="wf-weather-left w-full w-1/2">
+                    <div class="wf-searc-wrap flex align-center w-full gap-4">
+                    <!-- Search section -->
+                    <div class="wf-search-sec w-full">
+                        <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
+                        <button id="searchbtn" class="wf-btn wf-searchbtn" >Search</button>
+                        <span class="error"></span>
+                    </div>
+                    <div class="wf-toggle-btn w-full">
+                        <label class="wf-switch">
+                            <input type="checkbox" id="unitToggle">
+                            <span class="wf-slider">
+                                <span class="celsius">°C</span>
+                                <span class="fahrenheit">°F</span>
+                            </span>
+                        </label>
+                        
+                    </div>
+                    </div>
+                    <div id="wf-curweather"></div>
+                </div>
+                <div class="wf-weather-right w-full w-1/2   ">
+                    <h2 class="wf-heading">5-Day Forecast</h2>
+                </div>
             </div>
             <div class="wf-city-sec">
                 <h2>city</h2>
