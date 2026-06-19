@@ -89,25 +89,69 @@ async function getWeather(query){
         weatherData = data;
         const temp = currentUnit === "C" ? data.current.temp_c : data.current.temp_f;
         const unit = currentUnit === "C" ? "°C" : "°F";
-       
+        const feelsLike = currentUnit === "C" ? data.current.feelslike_c : data.current.feelslike_f;
         if(data.error){
             document.getElementById("wf-curweather").innerHTML=`
             <p>${data.error.message} </p>`;
             return;
         }
 
+        const date = new Date(data.location.localtime);
+        const day = date.toLocaleDateString("en-US",{weekday: "long"});
+        console.log("day is-", day)
+        const fullDate = date.toLocaleDateString("en-US", {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
+
         document.getElementById("wf-curweather").innerHTML=`
-        <div class="wf-bgimg">
+        <div class="wf-bgimg flex align-center justify-between">
         <div class="wf-weatdata">
-        <h2>${data.location.name}</h2>
-        <p>Temprature: ${temp} ${unit}</p>
-        <p>Current condition: ${data.current.condition.text}</p>
-        <h2> Chances Of rain:${data.chance_of_rain}</h2>
-        <p>Humidity: ${data.current.humidity}</p>
-        <p>Wind: ${data.current.wind_kph}</p>
-        <img src="${data.current.condition.icon}" />
-        </div></div>
+            <div class="wf-weatlocation flex gap-2">
+                <img src="./assets/images/location.png" alt="location-icon" width="30px" height="25px">
+                <h3>${data.location.name}</h3>
+            </div>
+            <p>${day}, ${fullDate}</p>
+            <h2>${temp} ${unit}</h2>
+        </div>
+        <div class="wf-weaimg">
+            <img src="${data.current.condition.icon}" alt="icon"/>
+        </div>
+        </div>
+        <h2 class="wf-heading">Air Condition</h2>
+        <div class="wf-weathercondition grid grid-cols-4 gap-4">
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/temprature.png" alt="icon">
+                    <span>Real Feel</span>
+                </div>
+                <h3>${feelsLike} ${unit}</h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/wind.png" alt="icon">
+                    <span>Wind</span>
+                </div>
+                <h3>${data.current.wind_kph} km/h </h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/clouds.png" alt="icon">
+                    <span>Clouds</span>
+                </div>
+                <h3>${data.current.cloud} % </h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/humidity.png" alt="icon">
+                    <span>Humidity</span>
+                </div>
+                <h3>${data.current.humidity} %</h3>
+            </div>
+        </div>
         `
+        console.log("wea-", data.current.feelslike_c)
         const conditiontext = data.current.condition.text.toLowerCase();
         console.log(conditiontext);
         const weathercard = document.querySelector(".wf-bgimg");
@@ -125,12 +169,13 @@ async function getWeather(query){
             weathercard.classList.add("sunny");
         }
     
-
         // console.log(conditiontext == "partly cloudy");
         // if(conditiontext == "partly cloudy"){
         //     console.log("partly cloudy called.");
         //     document.querySelector(".ef-bgimg").style.backgroundImage ="url('../assets/images/partly-cloudy.png')";
         // }
+
+       
     }
     catch(error){
         console.log(error);
@@ -153,23 +198,64 @@ async function getCurrentweather(){
 function displayWeather(data){
     const temp = currentUnit === "C" ? data.current.temp_c : data.current.temp_f ;
     const unit = currentUnit === "C" ? "°C" : "°F";
+    const feelsLike = currentUnit === "C" ? data.current.feelslike_c : data.current.feelslike_f;
+
+     const date = new Date(data.location.localtime);
+        const day = date.toLocaleDateString("en-US",{weekday: "long"});
+        console.log("day is-", day)
+        const fullDate = date.toLocaleDateString("en-US", {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
 
     document.getElementById("wf-curweather").innerHTML=`
-     <div class="wf-bgimg">
+     <div class="wf-bgimg flex align-center justify-between">
         <div class="wf-weatdata">
-        <div class="wf-weatlocation">
-        <img src="./assets/images/location.png">
-        <h2>${data.location.name}</h2>
+            <div class="wf-weatlocation flex gap-2">
+                <img src="./assets/images/location.png" alt="location-icon" width="30px" height="25px">
+                <h3>${data.location.name}</h3>
+            </div>
+            <p>${day}, ${fullDate}</p>
+            <h2>${temp} ${unit}</h2>
         </div>
-        <h2> Chances Of rain:${data.chance_of_rain}</h2>
-        <p>Temprature: ${temp} ${unit}</p>
-         <p>Current condition: ${data.current.condition.text}</p>
-        <p>Humidity: ${data.current.humidity}</p>
-        <p>Wind: ${data.current.wind_kph}</p>
-        <img src="${data.current.condition.icon}" />
-         </div></div>
+        <div class="wf-weaimg">
+            <img src="${data.current.condition.icon}" alt="icon"/>
+        </div>
+        </div>
+        <h2 class="wf-heading">Air Condition</h2>
+        <div class="wf-weathercondition grid grid-cols-4 gap-4">
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/temprature.png" alt="icon">
+                    <span>Real Feel</span>
+                </div>
+                <h3>${feelsLike} ${unit}</h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/wind.png" alt="icon">
+                    <span>Wind</span>
+                </div>
+                <h3>${data.current.wind_kph} km/h </h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/clouds.png" alt="icon">
+                    <span>Clouds</span>
+                </div>
+                <h3>${data.current.cloud} % </h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-2 align-center">
+                    <img src="./assets/images/humidity.png" alt="icon">
+                    <span>Humidity</span>
+                </div>
+                <h3>${data.current.humidity} %</h3>
+            </div>
+        </div>
         `;
-
+console.log("weaf-", data.current.feelslike_f);
         const conditiontext = data.current.condition.text.toLowerCase();
         console.log(conditiontext);
         const weathercard = document.querySelector(".wf-bgimg");
