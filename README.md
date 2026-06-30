@@ -66,3 +66,5 @@ When prompted by the browser, click **Allow** to enable current location weather
 - WeatherAPI
 - Local Storage
 - Geolocation API
+
+
