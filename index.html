@@ -19,7 +19,7 @@
          <div class="wf-header-wrapper flex flex-col align-center">
             <div class="wf-logo ">
                 <a href="index.html">
-                    <img src="assets/images/weather-logo.png" alt="logo">
+                    <img src="assets/images/weather-logo.png" alt="weather forecast logo">
                 </a>
             </div>
             <div class="wf-menus">
@@ -37,8 +37,8 @@
                 <div class="wf-searc-wrap flex flex-col md:flex-row items-center w-full gap-4">
                 <!-- <div class="wf-searc-wrap flex  align-center w-full gap-4 flex-wrap"> -->
                     <!-- Search section -->
-                    <div class="wf-search-sec w-full">
-                        <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
+                    <div class="wf-search-sec w-full flex gap-2 flex-col sm:flex-row">
+                        <input type="text" class="search-text w-full" id="searchcity" placeholder="Search for cities" />
                         <button type="button" id="searchbtn" class="wf-btn wf-searchbtn" >Search</button>
                         <span class="error"></span>
                         <select id="wf-recentCities" class="wf-recentoption" style="display: none;">
@@ -46,7 +46,7 @@
                         </select>
                     </div>
                     <!-- toggle section -->
-                    <div class="wf-toggle-btn w-full">
+                    <div class="wf-toggle-btn w-full md:w-auto">
                         <label class="wf-switch">
                             <input type="checkbox" id="unitToggle">
                             <span class="wf-slider">
@@ -59,9 +59,10 @@
                 <!-- Weather Alert section -->
                  <div id="wf-weatheralert" class="hidden flex flex-col md:flex-row items-center gap-6">
                 <!-- <div id="wf-weatheralert" class="hidden flex gap-10 align-center"> -->
-                <div class="wf-weaalert flex gap-10 align-center">
+                <!-- <div class="wf-weaalert flex gap-10 align-center"> -->
+                <div class="wf-weaalert flex flex-col sm:flex-row items-center gap-6"></div>
                     <div class="wf-weasunalert">
-                        <img src="assets/images/weather-alert.png" alt="alert">
+                        <img src="assets/images/weather-alert.png" alt="weather alert">
                     </div>
                     <div class="wf-weathertext">
                         <h4 class="font-semibold"> ⚠ Extreme Heat Alert</h4>
@@ -70,8 +71,8 @@
                     <div class="wf-weathersun">
                         <img src="assets/images/sun.png" alt="sun">
                     </div> 
-                    <div class="wf-weatheral-close">
-                        <button id="wf-closealert" aria-label="close weather alert">
+                    <div class="wf-weatheral-close hover:scale-110 transition" >
+                        <button id="wf-closealert" aria-label="close weather alert ">
                         <img src="assets/images/close.png" alt="close">
                         </button>
                     </div>

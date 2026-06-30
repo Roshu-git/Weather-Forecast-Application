@@ -86,7 +86,7 @@ async function getWeather(query){
         });
         // HTML design for weather data shown
         document.getElementById("wf-curweather").innerHTML=`
-        <div class="wf-bgimg flex align-center justify-between flex-col sm:flex-row sm:flex-nowrap md:flex-nowrap">
+        <div class="wf-bgimg flex align-center justify-between flex-col item-center sm:flex-row sm:flex-nowrap md:flex-nowrap">
         <div class="wf-weatdata">
             <div class="wf-weatlocation flex gap-2">
                 <img src="./assets/images/location.png" alt="location-icon" width="30px" height="25px">
@@ -211,7 +211,7 @@ function displayWeather(data){
         });
 
     document.getElementById("wf-curweather").innerHTML=`
-<div class="wf-bgimg flex flex-col sm:flex-row items-center justify-between gap-5">
+<div class="wf-bgimg flex align-center justify-between flex-col item-center sm:flex-row sm:flex-nowrap md:flex-nowrap">
         <div class="wf-weatdata">
             <div class="wf-weatlocation flex gap-2">
                 <img src="./assets/images/location.png" alt="location-icon" width="30px" height="25px">
@@ -225,7 +225,7 @@ function displayWeather(data){
         </div>
         </div>
         <h2 class="wf-heading">Air Condition</h2>
-        <div class="wf-weathercondition grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div class="wf-weathercondition grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="wf-conditionbox">
                 <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/temprature.png" alt="icon">
