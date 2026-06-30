@@ -540,6 +540,43 @@ h2, p{
     left: 20%;
 }
 /* ------- Weather Alert CSS End ----------- */
-/* ------- Header CSS Start ----------- */
-/* ------- Header CSS Start ----------- */
+/* ------- Responsive CSS Start ----------- */
+@media(max-width:1340px){
+    .wf-conditionbox{
+        padding: 15px 5px;
+    }
+}
+@media (max-width:640px){
+    .wf-header-wrapper{
+        max-width:80px;
+    }
+    .wf-curent-sec {
+        padding: 0 30px 0 0px;
+    }
+    .wf-conditionbox {
+        max-width: 360px;
+    }
+}
+@media (max-width:575px){
+    .wf-conditionbox {
+        max-width: 100%;
+    }
+    .wf-weatdata h2{
+        font-size: 50px;
+    }
+    .wf-curent-sec {
+        margin-left: 130px;
+    }
+
+}
+@media (max-width:425px){
+    .wf-weatdata h2{
+        font-size: 33px;
+    }
+    .wf-bgimg {
+        padding: 15px 10px 15px 10px;
+}
+}
+
+/* ------- Responsive CSS End ----------- */
 /* ------- Main CSS Start ----------- */
