@@ -18,6 +18,7 @@
     --body-bgcolor:#0b131e;
     --white-color:#fff;
     --border-color:#5f5d5d;
+    --alert-color:#a42118;
 }
 body{
     font-size: 16px;
@@ -25,7 +26,6 @@ body{
     line-height: 1.5;
     font-family: "Rubik", sans-serif;
     background-color: var(--body-bgcolor);
-    /* padding: 10px; */
 }
 h1,h2,h3.h4,h5,h6{
     margin: 0;
@@ -121,22 +121,22 @@ table, td, th{
 }
 .wf-menus button {
     margin: 0 auto 25px;
-    /* position: absolute; */
 }
 .wf-menus button span {
     font-size: 14px;
     font-weight: 400;
-    color: var(--white-color);
+    color: var(--secondary-color);
     line-height: 1.2;
 }
 /* ------- Header CSS End ----------- */
 /* ------- Main CSS Start ----------- */
+/* ------- Search-section CSS Start ----------- */
 .wf-curent-sec{
     margin-left: 140px;
     position: relative;
     top: 20px;
     height: 100%;
-    padding: 0 20px 0;
+    padding: 0 30px 0 20px;
 }
 .wf-search-sec .search-text{
     font-size: 16px;
@@ -146,7 +146,7 @@ table, td, th{
     background-color: var(--primary-color);
     padding: 0 10px;
     border-radius: 8px;
-    max-width: 550px;
+    max-width: 570px;
     width: 100%;
 }
 .wf-search-sec .search-text::placeholder{
@@ -168,7 +168,8 @@ span.error {
     top: 4px;
     padding: 5px 15px;
 }
-/* Switch-toggle css */
+/* ------- Search-section CSS End ----------- */
+/* ------- Switch-toggle CSS Start ----------- */
 .wf-toggle-btn{
     max-width: 70px;
 }
@@ -226,14 +227,8 @@ span.error {
 .wf-toggle-btn button.active{
 
 }
-.wf-heading {
-    font-size: 18px;
-    line-height: 1.2;
-    font-weight: 500;
-    padding: 8px 0 0;
-    text-align: left;
-}
-/* background-image css */
+/* ------- Switch-toggle CSS End----------- */
+/* ------- Forecast background-image CSS Start ----------- */
 .wf-bgimg {
     min-height: 260px;
     background-size: cover;
@@ -261,7 +256,7 @@ span.error {
     background-image: url('../images/partly-cloudy.jpg');
 }
 .rainy{
-    background-image: url('../images/rainy.png');
+    background-image: url('../images/rainybg.png');
 }
 .snowy{
     background-image: url('../images/snowy.png');
@@ -303,7 +298,8 @@ h2, p{
 .wf-city-sec{
     display: none;
 }
-/* ------- Main CSS Start ----------- */
+/* ------- Forecast background-image CSS Start ----------- */
+
 /* ------- weather condition CSS Start ----------- */
 .wf-weathercondition{
     padding: 15px 0 0 0;
@@ -315,24 +311,206 @@ h2, p{
     max-width: 150px;
     width: 100%;
 }
-.wf-conheading img{
-    height: 22px;
-    width: 22px;
-    object-fit: cover;
+.wf-conheading img {
+    height: 50px;
+    width: 50px;
+    margin: 0 auto;
+    /* object-fit: cover; */
 }
 .wf-conheading span{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
-    color: #c4c2c2;
+    color: var(--white-color);
+}
+.wf-conheading {
+    margin: 0 auto;
+    text-align: center;
 }
 .wf-conditionbox h3{
     font-size: 20px;
     color: var(--white-color);
     font-weight: 500;
-    padding: 10px 0px 10px;
 }
 /* ------- weather condition CSS End ----------- */
+
+/* ------- 5-day forecasr design CSS Start ----------- */
+.wf-weather-right {
+    /* margin: 13px 0 20px; */
+    margin: 0px 0 20px;
+}
+.wf-heading {
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 500;
+    text-align: left;
+}
+.wf-forecastcont{
+    padding: 10px 0 0;
+}
+.wf-forecastcard{
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--white-color);
+    text-align: center;
+}
+.wf-forecastcard h4{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--white-color);
+    text-align: left;
+}
+.wf-forcardbox img,.wf-forcardbox img{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+.wf-condition img{
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+}
+/* ------- 5-day forecasr design CSS End ----------- */
+
+/* ------- city section CSS Start ----------- */ 
+.wf-city-sec h2{
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 500;
+    text-align: left;
+    padding: 12px 0 15px;
+}
+.wf-citycard{
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.wf-citycard:hover{
+    background-color: var(--secondary-color);
+}
+.wf-recentoption {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 470px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 10px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    cursor: pointer;
+}
+.wf-recentoption option{
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+.wf-recentoption option:hover{
+    background-color: var(--secondary-color );
+    border-color: #ff9800;
+}
+.wf-recentoption:focus{
+    outline: none;
+    border-color: #ff9800;
+}
+.hidden {
+    display: none !important;
+}
+/* ------- city section CSS End ----------- */
+
+/* ------- Weather Alert CSS Start ----------- */
+#wf-weatheralert{
+    background-image: url('../images/heatbg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    position: relative;
+    border: 3px solid var(--alert-color);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    animation: glow 2s infinite;
+}
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(255,80,80,.4);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255,80,80,.9);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(255,80,80,.4);
+    }
+}
+#wf-weatheralert::after{
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(199 61 38 / 81%);
+}
+.wf-weasunalert, .wf-weathertext, .wf-weathersun,.wf-weatheral-close{
+    position: relative;
+    z-index: 1;
+}
+.wf-weathersun{
+    animation: rotateSun 8s linear infinite;
+}
+@keyframes rotateSun {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+.wf-weaalert{
+    position: relative;
+}
+.wf-weatheral-close{
+    position: absolute;
+    right: 0px;
+    top: 0px; 
+    cursor: pointer;
+}
+.wf-weatheral-close img{
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+.wf-weathertext h4{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--white-color);
+}
+.wf-weathertext p{
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 0;
+    line-height: 1.7;
+}
+.wf-weathertext{
+    max-width: 650px;
+    width: 100%;
+}
+.wf-weasunalert img, .wf-weathersun img{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+.wf-weathersun {
+    left: 20%;
+}
+/* ------- Weather Alert CSS End ----------- */
 /* ------- Header CSS Start ----------- */
 /* ------- Header CSS Start ----------- */
-/* ------- Header CSS Start ----------- */
-/* ------- Header CSS Start ----------- */
+/* ------- Main CSS Start ----------- */

@@ -1,32 +1,13 @@
 // My api-ky for this project
 const apiKey = "1112ff37e6bd431899684945261506";
 
-// Sidebar button working js
-const weatherbtn = document.getElementById("weather");
-const citybtn = document.getElementById("city");
-const weathersec = document.querySelector(".wf-weathersec");
-const citysec = document.querySelector(".wf-city-sec");
-
-weatherbtn.addEventListener("click", function(e){
-    e.preventDefault();
-    weathersec.style.display = "block";
-    citysec.style.display = "none";
-
-    weatherbtn.classList.add("active");
-    citybtn.classList.remove("active");
-})
-
-citybtn.addEventListener("click", function(e){
-    e.preventDefault();
-    citysec.style.display = "block";
-    weathersec.style.display="none";
-
-    citybtn.classList.add("active");
-    weatherbtn.classList.remove("active");
-})
-
 // on window load show current location
-window.addEventListener("load", getCurrentlocation);
+window.addEventListener("load", ()=>{
+    getCurrentlocation();
+    loadRecentcities();
+} 
+);
+
 function getCurrentlocation(){
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(
@@ -35,15 +16,19 @@ function getCurrentlocation(){
         );
     } else{
         getWeather("Indore");
+        FivedayForecast("Indore");
     }
 } 
 function success(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     getWeather(`${lat},${lon}`);
+    FivedayForecast(`${lat},${lon}`);
+
 }
 function error(){
     getWeather("Indore");
+    FivedayForecast("Indore");
 }
 
 // When user search city and click enter, apply event on the enter button
@@ -71,21 +56,12 @@ unitToggle.addEventListener("change", ()=>{
 let currentUnit = "C";
 let weatherData = null;
 
-// document.getElementById("celciusbtn").addEventListener("click", function(){
-//     currentUnit ="C"
-//     displayWeather(weatherData);
-// })
-// document.getElementById("fahrenheitbtn").addEventListener("click", function(){
-//     currentUnit ="F"
-//     displayWeather(weatherData);
-// })
-// function when any query occurs 
+// function when any query occurs and fetch weather data
 async function getWeather(query){
-
     try{
+        console.log("api key",apiKey);
         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}`);
         const data = await response.json();
-
         weatherData = data;
         const temp = currentUnit === "C" ? data.current.temp_c : data.current.temp_f;
         const unit = currentUnit === "C" ? "°C" : "°F";
@@ -104,7 +80,7 @@ async function getWeather(query){
             month:"long",
             year:"numeric"
         });
-
+        // HTML design for weather data shown
         document.getElementById("wf-curweather").innerHTML=`
         <div class="wf-bgimg flex align-center justify-between">
         <div class="wf-weatdata">
@@ -122,41 +98,48 @@ async function getWeather(query){
         <h2 class="wf-heading">Air Condition</h2>
         <div class="wf-weathercondition grid grid-cols-4 gap-4">
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/temprature.png" alt="icon">
                     <span>Real Feel</span>
+                    <h3>${feelsLike} ${unit}</h3>
                 </div>
-                <h3>${feelsLike} ${unit}</h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/wind.png" alt="icon">
                     <span>Wind</span>
+                    <h3>${data.current.wind_kph} km/h </h3>
                 </div>
-                <h3>${data.current.wind_kph} km/h </h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/clouds.png" alt="icon">
                     <span>Clouds</span>
+                    <h3>${data.current.cloud} % </h3>
                 </div>
-                <h3>${data.current.cloud} % </h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/humidity.png" alt="icon">
                     <span>Humidity</span>
+                    <h3>${data.current.humidity} %</h3>
                 </div>
-                <h3>${data.current.humidity} %</h3>
             </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
+                    <img src="./assets/images/rainy.png" alt="icon">
+                    <span>Rain</span>
+                    <h3>${data.current.chance_of_rain} % </h3>
+                </div>
+            </div>  
         </div>
         `
-        console.log("wea-", data.current.feelslike_c)
+        
         const conditiontext = data.current.condition.text.toLowerCase();
-        console.log(conditiontext);
         const weathercard = document.querySelector(".wf-bgimg");
-        weathercard.classList.remove("sunny", "cloudy", "partly-cloudy" , "rainy", "snowy", "mist","fog","freezing-fog");
 
+        // Add and remove class according to weather condition and change background image
+        weathercard.classList.remove("sunny", "cloudy", "partly-cloudy" , "rainy", "snowy", "mist","fog","freezing-fog");
         if(conditiontext.includes("cloud") || conditiontext.includes("partly-cloudy") ){
             weathercard.classList.add("cloudy");
         } else if(conditiontext.includes("rain")){
@@ -169,22 +152,31 @@ async function getWeather(query){
             weathercard.classList.add("sunny");
         }
     
-        // console.log(conditiontext == "partly cloudy");
-        // if(conditiontext == "partly cloudy"){
-        //     console.log("partly cloudy called.");
-        //     document.querySelector(".ef-bgimg").style.backgroundImage ="url('../assets/images/partly-cloudy.png')";
-        // }
-
+        // Show weather alert box when temprature is greater than 40°C
+        const alertbox = document.getElementById("wf-weatheralert");
+        const closebtn = document.getElementById("wf-closealert");
+        if(data.current.temp_c > 20){
+            alertbox.classList.remove("hidden");
+            alertbox.style.display="block"
+            console.log(alertbox);
+        } else{
+            alertbox.classList.add("hidden");
+            console.log(alertbox);
+        }
+        closebtn.addEventListener("click", ()=>{
+            alertbox.classList.add("hidden");
+        })
        
     }
     catch(error){
         console.log(error);
     }
+
 }
 // when user click on search button, apply event on search button
 document.getElementById("searchbtn").addEventListener("click", getCurrentweather);
 
-// If not write in the search city fiels then 
+// If not write in the search city field then shiw error
 async function getCurrentweather(){
     const city = document.getElementById("searchcity").value.trim();
     if(!city){
@@ -193,8 +185,11 @@ async function getCurrentweather(){
     }
     document.querySelector(".error").textContent=" ";
     getWeather(city);
+    FivedayForecast(city);
+    saveRecentcity(city);
 }
 
+// Dusplat weather data such us humidity, wind ,rain etc.
 function displayWeather(data){
     const temp = currentUnit === "C" ? data.current.temp_c : data.current.temp_f ;
     const unit = currentUnit === "C" ? "°C" : "°F";
@@ -226,41 +221,48 @@ function displayWeather(data){
         <h2 class="wf-heading">Air Condition</h2>
         <div class="wf-weathercondition grid grid-cols-4 gap-4">
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/temprature.png" alt="icon">
                     <span>Real Feel</span>
+                    <h3>${feelsLike} ${unit}</h3>
                 </div>
-                <h3>${feelsLike} ${unit}</h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/wind.png" alt="icon">
                     <span>Wind</span>
+                    <h3>${data.current.wind_kph} km/h </h3>
                 </div>
-                <h3>${data.current.wind_kph} km/h </h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/clouds.png" alt="icon">
                     <span>Clouds</span>
+                    <h3>${data.current.cloud} % </h3>
                 </div>
-                <h3>${data.current.cloud} % </h3>
             </div>
             <div class="wf-conditionbox">
-                <div class="wf-conheading flex gap-2 align-center">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
                     <img src="./assets/images/humidity.png" alt="icon">
                     <span>Humidity</span>
+                    <h3>${data.current.humidity} %</h3>
                 </div>
-                <h3>${data.current.humidity} %</h3>
+            </div>
+            <div class="wf-conditionbox">
+                <div class="wf-conheading flex gap-3 align-center flex-col">
+                    <img src="./assets/images/rainy.png" alt="icon">
+                    <span>Rain</span>
+                    <h3>${data.current.chance_of_rain} %</h3>
+                </div>
             </div>
         </div>
         `;
-console.log("weaf-", data.current.feelslike_f);
-        const conditiontext = data.current.condition.text.toLowerCase();
-        console.log(conditiontext);
-        const weathercard = document.querySelector(".wf-bgimg");
-        weathercard.classList.remove("sunny", "cloudy", "partly-cloudy" , "rainy", "snowy", "mist","fog","freezing-fog");
 
+        const conditiontext = data.current.condition.text.toLowerCase();
+        const weathercard = document.querySelector(".wf-bgimg");
+
+        // Add and remove class according to weather condition and change background image 
+        weathercard.classList.remove("sunny", "cloudy", "partly-cloudy" , "rainy", "snowy", "mist","fog","freezing-fog");
         if(conditiontext.includes("cloud") || conditiontext.includes("partly-cloudy") ){
             weathercard.classList.add("cloudy");
         } else if(conditiontext.includes("rain")){
@@ -272,8 +274,117 @@ console.log("weaf-", data.current.feelslike_f);
         }else{
             weathercard.classList.add("sunny");
         }
+            
 }
 
-// 
+// 5-day forecast show
+async function FivedayForecast(query){
+    try{
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=6`);
+        const data = await response.json();
 
+        const temp = currentUnit === "C" ? data.current.temp_c : data.current.temp_f;
+        const unit = currentUnit === "C" ? "°C" : "°F";
+ 
+        const forecastContainer = document.getElementById("wf-forecastcontainer");
+        forecastContainer.innerHTML = " ";
+        data.forecast.forecastday.slice(1).forEach(day=>{
+            const dayName = new Date(day.date).toLocaleDateString("en-US",{
+                weekday: "long"
+            });
+            forecastContainer.innerHTML += `
+        <div class="wf-forecastcard grid grid-cols-3 gap-4">
+            <h4>${dayName}</h4>
+            <div class="wf-forcardbox wf-forhumidity flex gap-3 align-center">
+                <img src="./assets/images/temprature.png" alt="icon">
+                <p>${day.day.avgtemp_c} ${unit}</p>
+            </div>
+            <div class="wf-forcardbox wf-forwind flex gap-3 align-center">
+                <img src="./assets/images/wind.png" alt="icon">
+                <p>${day.day.avgtemp_c} ${unit}</p>
+            </div>
+            <div class="wf-forcardbox wf-condition flex gap-2 items-center">
+                <img src="${day.day.condition.icon}" alt="weather">
+                <p>${day.day.condition.text}</p>
+            </div>
+            <div class="wf-forcardbox flex gap-3 align-center">
+                <img src="./assets/images/rainy.png" alt="cloud">
+                <p>${day.day.daily_chance_of_rain} %</p>
+            </div>
+            <div class="wf-forcardbox flex gap-3 align-center">
+                <img src="./assets/images/humidity.png" alt="humidity">
+                <p>${day.day.avghumidity} %</p>
+            </div>
+           
+        </div> 
+        `
+        })
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
+// Ṛecently searched city saved on local storage
+function saveRecentcity(city){
+    let cities =JSON.parse(localStorage.getItem("wf-recentCities")) || [];
+
+    city = city.trim();
+    // Remove duplicate
+    cities = cities.filter(c=>c.toLowerCase() !== city.toLowerCase());
+    
+    // Add latest city at top
+    cities.unshift(city);
+    if(cities.length > 5){
+        cities.pop();
+    }
+    localStorage.setItem("wf-recentCities",JSON.stringify([]));
+    // localStorage.removeItem("wf-recentCities");
+    loadRecentcities();
+}
+// Dropdown menu for recently searched cities
+function loadRecentcities(){
+    const dropdown = document.getElementById("wf-recentCities");
+    const cities = JSON.parse(localStorage.getItem("wf-recentCities")) || [];
+    dropdown.innerHTML =
+    `<option value="">Recently searched cities</option>`;
+    if(cities.length === 0){
+        dropdown.style.display="none";
+        return;
+    }
+    dropdown.style.display = "block";
+    cities.forEach(city=>{
+        dropdown.innerHTML +=`
+        <option value="${city}">${city}</option>`;
+    });
+}
+
+// click city from dropdown then show data
+document.getElementById("wf-recentCities").addEventListener("change", function(){
+    const city=this.value;
+     if(city){
+        document.getElementById("searchcity").value = city;
+        getWeather(city);
+        FivedayForecast(city);
+    }
+
+})
+
+// Ḍisplay recent cities fetch from the local storage.
+function displayRecentcities(){
+    const recentcontainer = document.getElementById("wf-recentCities");
+    let cities = JSON.parse(localStorage.getItem("wf-recentCities")) || [];
+   
+    recentcontainer.innerHTML = "";
+
+    if(cities.length === 0){
+        recentcontainer.innerHTML = "<p>No Recent Search cities.</p>";
+        return;
+    }
+    cities.forEach(city =>{
+        recentcontainer.innerHTML +=`
+        <div class="wf-citycard" onclick="selectCity('${city}')">
+            ${city}
+        </div>`
+    })
+}
