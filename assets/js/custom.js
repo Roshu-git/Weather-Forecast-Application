@@ -16,19 +16,19 @@ function getCurrentlocation(){
         );
     } else{
         getWeather("Indore");
-        FivedayForecast("Indore");
+        fivedayForecast("Indore");
     }
 } 
 function success(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     getWeather(`${lat},${lon}`);
-    FivedayForecast(`${lat},${lon}`);
+    fivedayForecast(`${lat},${lon}`);
 
 }
 function error(){
     getWeather("Indore");
-    FivedayForecast("Indore");
+    fivedayForecast("Indore");
 }
 
 // When user search city and click enter, apply event on the enter button
@@ -42,7 +42,7 @@ const unitToggle=  document.getElementById("unitToggle");
 unitToggle.addEventListener("change", ()=>{
     if(unitToggle.checked){
         currentUnit = "F";
-        console.log("show fareenite");
+        console.log("show farehenite");
 
     }else{
         currentUnit = "C";
@@ -58,8 +58,13 @@ let weatherData = null;
 
 // function when any query occurs and fetch weather data
 async function getWeather(query){
+    const loader = document.getElementById("wf-loader");
+    const weather = document.getElementById("wf-curweather");
+
+    loader.classList.remove("hidden");
+    weather.innerHTML = "";
+
     try{
-        console.log("api key",apiKey);
         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}`);
         const data = await response.json();
         weatherData = data;
@@ -74,7 +79,6 @@ async function getWeather(query){
 
         const date = new Date(data.location.localtime);
         const day = date.toLocaleDateString("en-US",{weekday: "long"});
-        console.log("day is-", day)
         const fullDate = date.toLocaleDateString("en-US", {
             day:"numeric",
             month:"long",
@@ -155,21 +159,23 @@ async function getWeather(query){
         // Show weather alert box when temprature is greater than 40°C
         const alertbox = document.getElementById("wf-weatheralert");
         const closebtn = document.getElementById("wf-closealert");
-        if(data.current.temp_c > 20){
+        if(data.current.temp_c > 40){
             alertbox.classList.remove("hidden");
             alertbox.style.display="block"
-            console.log(alertbox);
         } else{
             alertbox.classList.add("hidden");
-            console.log(alertbox);
         }
         closebtn.addEventListener("click", ()=>{
             alertbox.classList.add("hidden");
         })
        
     }
+    // loader.classList.add("hidden");
     catch(error){
-        console.log(error);
+        console.log("Unable to fetch weather , please try again");
+        loader.classList.add("hidden");
+    }finally {
+        loader.classList.add("hidden");
     }
 
 }
@@ -185,7 +191,7 @@ async function getCurrentweather(){
     }
     document.querySelector(".error").textContent=" ";
     getWeather(city);
-    FivedayForecast(city);
+    fivedayForecast(city);
     saveRecentcity(city);
 }
 
@@ -197,7 +203,6 @@ function displayWeather(data){
 
      const date = new Date(data.location.localtime);
         const day = date.toLocaleDateString("en-US",{weekday: "long"});
-        console.log("day is-", day)
         const fullDate = date.toLocaleDateString("en-US", {
             day:"numeric",
             month:"long",
@@ -278,7 +283,7 @@ function displayWeather(data){
 }
 
 // 5-day forecast show
-async function FivedayForecast(query){
+async function fivedayForecast(query){
     try{
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=6`);
         const data = await response.json();
@@ -338,7 +343,7 @@ function saveRecentcity(city){
     if(cities.length > 5){
         cities.pop();
     }
-    localStorage.setItem("wf-recentCities",JSON.stringify([]));
+    localStorage.setItem("wf-recentCities",JSON.stringify(cities));
     // localStorage.removeItem("wf-recentCities");
     loadRecentcities();
 }
@@ -365,26 +370,26 @@ document.getElementById("wf-recentCities").addEventListener("change", function()
      if(city){
         document.getElementById("searchcity").value = city;
         getWeather(city);
-        FivedayForecast(city);
+        fivedayForecast(city);
     }
 
 })
 
-// Ḍisplay recent cities fetch from the local storage.
-function displayRecentcities(){
-    const recentcontainer = document.getElementById("wf-recentCities");
-    let cities = JSON.parse(localStorage.getItem("wf-recentCities")) || [];
+// Ḍisplay recent cities fetch from the local storage.00
+// function displayRecentcities(){
+//     const recentcontainer = document.getElementById("wf-recentCities");
+//     let cities = JSON.parse(localStorage.getItem("wf-recentCities")) || [];
    
-    recentcontainer.innerHTML = "";
+//     recentcontainer.innerHTML = "";
 
-    if(cities.length === 0){
-        recentcontainer.innerHTML = "<p>No Recent Search cities.</p>";
-        return;
-    }
-    cities.forEach(city =>{
-        recentcontainer.innerHTML +=`
-        <div class="wf-citycard" onclick="selectCity('${city}')">
-            ${city}
-        </div>`
-    })
-}
+//     if(cities.length === 0){
+//         recentcontainer.innerHTML = "<p>No Recent Search cities.</p>";
+//         return;
+//     }
+//     cities.forEach(city =>{
+//         recentcontainer.innerHTML +=`
+//         <div class="wf-citycard" onclick="selectCity('${city}')">
+//             ${city}
+//         </div>`
+//     })
+// }

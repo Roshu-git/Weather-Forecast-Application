@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <!-- Custom Css Link -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Weather Forcast Application</title>
+    <title>Weather Forecast Application</title>
 </head>
 <body>
     <!-- Sidemenu section -->
@@ -24,7 +24,7 @@
             </div>
             <div class="wf-menus">
                 <button id="weather" class="nav-btn active">
-                    <img src="assets/images/wf-icon1.png" alt="image">
+                    <img src="assets/images/wf-icon1.png" alt="weather icon">
                     <span >Weather</span>
                 </button>
             </div>
@@ -38,7 +38,7 @@
                     <!-- Search section -->
                     <div class="wf-search-sec w-full">
                         <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
-                        <button id="searchbtn" class="wf-btn wf-searchbtn" >Search</button>
+                        <button type="button" id="searchbtn" class="wf-btn wf-searchbtn" >Search</button>
                         <span class="error"></span>
                         <select id="wf-recentCities" class="wf-recentoption" style="display: none;">
                             <option value="">Recently Searched Cities</option>
@@ -62,14 +62,14 @@
                         <img src="assets/images/weather-alert.png" alt="alert">
                     </div>
                     <div class="wf-weathertext">
-                        <h4 class="font-semibold"> ⚠ Extream Heat Alert</h4>
-                        <p>Temprature is above 40°C. <br />Stay hydrated and avoid direct sunlight.</p>
+                        <h4 class="font-semibold"> ⚠ Extreme Heat Alert</h4>
+                        <p>Temperature is above 40°C. <br />Stay hydrated and avoid direct sunlight.</p>
                     </div>
                     <div class="wf-weathersun">
                         <img src="assets/images/sun.png" alt="sun">
                     </div> 
                     <div class="wf-weatheral-close">
-                        <button id="wf-closealert">
+                        <button id="wf-closealert" aria-label="close weather alert">
                         <img src="assets/images/close.png" alt="close">
                         </button>
                     </div>
@@ -77,26 +77,12 @@
                 </div>
                 <div class="wf-weatherinner flex w-full gap-7">
                     <div class="wf-weather-left w-full w-1/2">
-                        <!-- <div class="wf-searc-wrap flex align-center w-full gap-4">
-                        <!-- Search section ->
-                        <div class="wf-search-sec w-full">
-                            <input type="text" class="search-text" id="searchcity" placeholder="Search for cities" />
-                            <button id="searchbtn" class="wf-btn wf-searchbtn" >Search</button>
-                            <span class="error"></span>
-                            <select id="wf-recentCities" class="wf-recentoption" style="display: none;">
-                                <option value="">Recently Searched Cities</option>
-                            </select>
-                        </div>
-                        <div class="wf-toggle-btn w-full">
-                            <label class="wf-switch">
-                                <input type="checkbox" id="unitToggle">
-                                <span class="wf-slider">
-                                    <span class="celsius">°C</span>
-                                    <span class="fahrenheit">°F</span>
-                                </span>
-                            </label>
-                        </div>
-                        </div> -->   
+                        <!-- loader before fetching -->
+                         <div id="wf-loader" class="hidden flex flex-col justify-center items-center py-8 gap-3">
+                        <div class="loader"></div>
+                        <p class="text-gray-400">Fetching latest weather...</p>
+                    </div>
+
                         <!-- Show Current weather  -->
                     <div id="wf-curweather"></div>
                 </div>
